@@ -19,10 +19,11 @@ namespace MessagesExchange.Infrastructure.Migrations.DatabaseMigrations
             try
             {
                 var sql = @"
-                    CREATE TABLE IF NOT EXISTS Message (
-                        Id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                        Name TEXT NOT NULL,
-                        CreatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+                    CREATE TABLE IF NOT EXISTS messages (
+                        id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                        text TEXT NOT NULL,
+                        order_id int not null,
+                        created_at timestamp without time zone NOT NULL
                     );
                 ";
                 await connection.ExecuteAsync(sql, cancellationToken);

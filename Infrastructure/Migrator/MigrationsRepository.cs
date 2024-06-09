@@ -33,9 +33,9 @@ namespace MessagesExchange.Infrastructure.Migrations
             try
             {
                 var sql = @"SELECT 
-                                id,
-                                name,
-                                sequential_number
+                                id as Id,
+                                name as Name,
+                                sequential_number as SequentialNumber
                             from migrations";
 
                 var result = await connection.QueryAsync<MigrationInfo>(sql);
