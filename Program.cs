@@ -1,6 +1,23 @@
+using MessagesExchange.Data.Messages;
+using MessagesExchange.Infrastructure;
+using MessagesExchange.Infrastructure.Migrations;
+using MessagesExchange.Infrastructure.Migrations.DatabaseMigrations;
+using MessagesExchange.Infrastructure.Migrator;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<SqlConnectionsFactory>();
+builder.Services.AddSingleton<IMigrationsRepository, MigrationsRepository>();
+builder.Services.AddSingleton<IMigrationsService, MigrationsService>();
+
+builder.Services.AddSingleton<Migration, InitialMigration>();
+builder.Services.AddSingleton<Migration, MessagesTableMigration>();
+
+builder.Services.AddScoped<IMessagesRepository, MessagesRepository>();
+
+builder.Services.AddHostedService<Migrator>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

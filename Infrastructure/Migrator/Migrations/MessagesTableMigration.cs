@@ -5,15 +5,15 @@ namespace MessagesExchange.Infrastructure.Migrations.DatabaseMigrations
 {
     public class MessagesTableMigration : Migration
     {
-        private readonly string _dbString;
-        public MessagesTableMigration(IConfiguration configuration)
+        private readonly SqlConnectionsFactory _connectionsFactory;
+        public MessagesTableMigration(SqlConnectionsFactory connectionsFactory)
         {
-            _dbString = configuration.GetConnectionString("DefaultConnection");
+            _connectionsFactory = connectionsFactory;
         }
 
         public override async Task Execute(CancellationToken cancellationToken = default)
         {
-            using var connection = SqlConnectionsFactory.CreateConnection(_dbString);
+            using var connection = _connectionsFactory.CreateConnection();
 
             await connection.OpenAsync(cancellationToken);
             try

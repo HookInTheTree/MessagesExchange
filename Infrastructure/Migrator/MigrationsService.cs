@@ -1,8 +1,4 @@
-﻿
-using Dapper;
-using MessagesExchange.Infrastructure.Migrations.DatabaseMigrations;
-using Microsoft.AspNetCore.Connections;
-using Npgsql;
+﻿using MessagesExchange.Infrastructure.Migrations.DatabaseMigrations;
 
 namespace MessagesExchange.Infrastructure.Migrations
 {
@@ -19,9 +15,24 @@ namespace MessagesExchange.Infrastructure.Migrations
 
         public async Task Migrate()
         {
-            foreach (var migration in _migrations)
+            List<MigrationInfo> executedMigrations;
+            List<Migration> migrationsToExecute;
+
+            try
+            {
+                executedMigrations = await _repository.GetMigrations();
+                migrationsToExecute = _migrations.Where(m => !executedMigrations.Any(em => em.Name != m.GetType().Name))
+                    .ToList();
+            }
+            catch
+            {
+                migrationsToExecute = _migrations.ToList();
+            }
+
+            foreach (var migration in migrationsToExecute)
             {
                 await migration.Execute();
+
                 await _repository.CreateMigrationInfo(new MigrationInfo()
                 {
                     Id = new Guid(),
@@ -29,5 +40,6 @@ namespace MessagesExchange.Infrastructure.Migrations
                 });
             }
         }
+
     }
 }
