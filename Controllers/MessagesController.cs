@@ -72,7 +72,7 @@ namespace MessagesExchange.Controllers
                 OrderNumber = message.OrderId
             };
 
-            await _hubContext.Clients.All.SendAsync("Send", response);
+            await _hubContext.Clients.All.SendAsync("RecieveMessage", response);
             return Ok(response);
         }
     }

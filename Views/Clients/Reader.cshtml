@@ -1,5 +1,59 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<div class="container mt-5">
+    <h2 class="mb-4">Сообщения</h2>
+    <div class="form-inline mb-4">
+        <label for="startDate" class="mr-2">Начиная с:</label>
+        <input type="datetime-local" id="startDate" class="form-control mr-2">
+        <label for="endDate" class="mr-2">Заканчивая:</label>
+        <input type="datetime-local" id="endDate" class="form-control mr-2">
+        <button id="filterButton" class="btn btn-primary">Filter</button>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Сообщение</th>
+                <th>Порядковый номер</th>
+                <th>Дата создания</th>
+            </tr>
+        </thead>
+        <tbody id="message-table-body">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchMessages();
+
+        document.getElementById('filterButton').addEventListener('click', function () {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            fetchMessages(startDate, endDate);
+        });
+    });
+
+
+    function fetchMessages(startDate, endDate) {
+        let url = '/api/messages';
+        if (startDate || endDate) {
+            url += `?dateFrom=${startDate}&dateTo=${endDate}`;
+        }
+
+        fetch(url).then(response => response.json()).then(data => {
+            let messages = data;
+            let messageTableBody = document.getElementById('message-table-body');
+            messageTableBody.innerHTML = "";
+
+            for (let i = 0; i < messages.length; i++) {
+                let message = messages[i];
+                let row = document.createElement('tr');
+                row.innerHTML = `<td>${message.message}</td>
+                                 <td>${message.orderNumber}</td>
+                                 <td>${message.createdAt}</td>`;
+
+                messageTableBody.appendChild(row);
+            };
+        })
+    }
+</script>
+   

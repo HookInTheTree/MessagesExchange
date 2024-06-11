@@ -1,5 +1,42 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h5 class="card-title">Отправка сообщения</h5>
+                    <div class="form-group">
+                        <label for="message">Сообщение:</label>
+                        <input type="text" class="form-control" id="message" placeholder="Введите ваше сообщение">
+                    </div>
+                    <div class="form-group">
+                        <label for="order">Порядковый номер:</label>
+                        <input type="number" class="form-control" id="order" placeholder="Введите порядковый номер">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary" id="sendButton">Отправить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("sendButton").addEventListener("click", () => {
+            let message = document.getElementById("message").value;
+            let order = document.getElementById("order").value;
+
+            fetch("/api/messages", {
+                method: "POST",
+                body: JSON.stringify({
+                    message: message,
+                    order: order
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            });
+        })
+    });
+</script>

@@ -7,7 +7,7 @@ using MessagesExchange.Infrastructure.SignalR;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<SqlConnectionsFactory>();
-builder.Services.AddSingleton<IMigrationsRepository, MigrationsRepository>();`
+builder.Services.AddSingleton<IMigrationsRepository, MigrationsRepository>();
 builder.Services.AddSingleton<IMigrationsService, MigrationsService>();
 
 builder.Services.AddSingleton<Migration, InitialMigration>();
@@ -22,7 +22,8 @@ builder.Services.AddSignalR().AddHubOptions<MessagesRealTimeHub>(options =>
     options.EnableDetailedErrors = true;
 });
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
@@ -41,8 +42,8 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Clients}/{action=Reader}/{id?}");
 
-app.MapHub<MessagesRealTimeHub>("/chat");
+app.MapHub<MessagesRealTimeHub>("/real-time-messages");
 
 app.Run();
