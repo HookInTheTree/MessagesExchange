@@ -1,4 +1,4 @@
-﻿namespace MessagesExchange.Infrastructure.Migrations.DatabaseMigrations
+﻿namespace MessagesExchange.Infrastructure.Database.Migrator.Migrations
 {
     public abstract class Migration
     {

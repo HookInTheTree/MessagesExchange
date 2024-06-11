@@ -1,6 +1,6 @@
-﻿using MessagesExchange.Infrastructure.Migrations.DatabaseMigrations;
+﻿using MessagesExchange.Infrastructure.Database.Migrator.Migrations;
 
-namespace MessagesExchange.Infrastructure.Migrations
+namespace MessagesExchange.Infrastructure.Database.Migrator
 {
     public class MigrationsService : IMigrationsService
     {

@@ -1,9 +1,10 @@
 ﻿using Dapper;
+using MessagesExchange.Infrastructure.Database;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.Extensions.Configuration;
 using System.Threading;
 
-namespace MessagesExchange.Infrastructure.Migrations.DatabaseMigrations
+namespace MessagesExchange.Infrastructure.Database.Migrator.Migrations
 {
     public class InitialMigration : Migration
     {

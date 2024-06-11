@@ -1,4 +1,4 @@
-﻿namespace MessagesExchange.Infrastructure.Migrations
+﻿namespace MessagesExchange.Infrastructure.Database.Migrator
 {
     public interface IMigrationsService
     {

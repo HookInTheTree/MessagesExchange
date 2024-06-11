@@ -1,7 +1,7 @@
 ﻿using Dapper;
-using MessagesExchange.Infrastructure;
+using MessagesExchange.Infrastructure.Database;
 
-namespace MessagesExchange.Data.Messages
+namespace MessagesExchange.Infrastructure.Database.Messages
 {
     public class MessagesRepository : IMessagesRepository
     {
@@ -20,13 +20,13 @@ namespace MessagesExchange.Data.Messages
                 var sql = @"INSERT INTO messages (id, text, order_id, created_at) VALUES (@Id, @Text, @OrderId, @CreatedAt)";
 
                 await connection.ExecuteAsync(
-                    sql:sql,
-                    param:new
+                    sql: sql,
+                    param: new
                     {
-                        Id = message.Id,
-                        Text = message.Text,
-                        OrderId = message.OrderId,
-                        CreatedAt = message.CreatedAt
+                        message.Id,
+                        message.Text,
+                        message.OrderId,
+                        message.CreatedAt
                     });
 
                 return message;

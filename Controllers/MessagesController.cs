@@ -1,6 +1,8 @@
 ﻿using MessagesExchange.ApiModels.Messages;
-using MessagesExchange.Data.Messages;
+using MessagesExchange.Infrastructure.Database.Messages;
+using MessagesExchange.Infrastructure.SignalR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace MessagesExchange.Controllers
 {
@@ -9,9 +11,11 @@ namespace MessagesExchange.Controllers
     public class MessagesController : ControllerBase
     {
         private readonly IMessagesRepository _messagesRepository;
-        public MessagesController(IMessagesRepository messagesRepository)
+        private readonly IHubContext<MessagesRealTimeHub> _hubContext;
+        public MessagesController(IMessagesRepository messagesRepository, IHubContext<MessagesRealTimeHub> hubContext)
         {
             _messagesRepository = messagesRepository;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -61,12 +65,15 @@ namespace MessagesExchange.Controllers
                 CreatedAt = DateTime.Now
             });
 
-            return Ok(new MessageResponse()
+            var response = new MessageResponse()
             {
                 Message = message.Text,
                 CreatedAt = message.CreatedAt.ToString(),
                 OrderNumber = message.OrderId
-            });
+            };
+
+            await _hubContext.Clients.All.SendAsync("Send", response);
+            return Ok(response);
         }
     }
 }

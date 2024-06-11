@@ -1,7 +1,4 @@
-﻿
-using MessagesExchange.Infrastructure.Migrations;
-
-namespace MessagesExchange.Infrastructure.Migrator
+﻿namespace MessagesExchange.Infrastructure.Database.Migrator
 {
     public class Migrator : IHostedService
     {

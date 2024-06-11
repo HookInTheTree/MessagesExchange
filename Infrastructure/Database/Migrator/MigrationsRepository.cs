@@ -1,7 +1,8 @@
 ﻿
 using Dapper;
+using MessagesExchange.Infrastructure.Database;
 
-namespace MessagesExchange.Infrastructure.Migrations
+namespace MessagesExchange.Infrastructure.Database.Migrator
 {
     public class MigrationsRepository : IMigrationsRepository
     {

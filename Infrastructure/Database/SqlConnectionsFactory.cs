@@ -1,7 +1,7 @@
 ﻿using Npgsql;
 using System.Data.Common;
 
-namespace MessagesExchange.Infrastructure
+namespace MessagesExchange.Infrastructure.Database
 {
     public class SqlConnectionsFactory
     {

@@ -1,4 +1,4 @@
-﻿namespace MessagesExchange.Data.Messages
+﻿namespace MessagesExchange.Infrastructure.Database.Messages
 {
     public interface IMessagesRepository
     {
