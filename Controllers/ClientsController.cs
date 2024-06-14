@@ -4,11 +4,8 @@ namespace MessagesExchange.Controllers
 {
     public class ClientsController : Controller
     {
-        private readonly ILogger<ClientsController> _logger;
-
-        public ClientsController(ILogger<ClientsController> logger)
+        public ClientsController()
         {
-            _logger = logger;
         }
 
         public IActionResult Sender()

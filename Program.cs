@@ -2,7 +2,9 @@ using MessagesExchange.Infrastructure.Database;
 using MessagesExchange.Infrastructure.Database.Messages;
 using MessagesExchange.Infrastructure.Database.Migrator;
 using MessagesExchange.Infrastructure.Database.Migrator.Migrations;
+using MessagesExchange.Infrastructure.Logging;
 using MessagesExchange.Infrastructure.SignalR;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,16 @@ builder.Services.AddSignalR().AddHubOptions<MessagesRealTimeHub>(options =>
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();
 
+builder.Services.AddLogging(loggerBuilder =>
+{
+    var logger = new LoggerConfiguration()
+                .ReadFrom
+                .Configuration(builder.Configuration)
+                .CreateLogger();
+
+    loggerBuilder.AddSerilog(logger);
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -45,5 +57,7 @@ app.MapControllerRoute(
     pattern: "{controller=Clients}/{action=Reader}/{id?}");
 
 app.MapHub<MessagesRealTimeHub>("/real-time-messages");
+
+app.UseMiddleware<RequestsLoggingMiddleware>();
 
 app.Run();
