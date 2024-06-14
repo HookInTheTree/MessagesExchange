@@ -41,7 +41,6 @@ var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
@@ -58,6 +57,5 @@ app.MapControllerRoute(
 
 app.MapHub<MessagesRealTimeHub>("/real-time-messages");
 
-app.UseMiddleware<RequestsLoggingMiddleware>();
 
 app.Run();

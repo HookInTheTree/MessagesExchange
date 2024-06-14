@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  messagesexchange:
+    image: ${DOCKER_REGISTRY-}messagesexchange
+    build:
+      context: MessagesExchange
+      dockerfile: Dockerfile

@@ -13,17 +13,11 @@ public class RequestsLoggingMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        await LogRequest(context);
         await next(context);
         await LogResponse(context);
     }
 
-    public async Task LogRequest(HttpContext context)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task LogResponse(HttpContext context)
+    private Task LogResponse(HttpContext context)
     {
         throw new NotImplementedException();
     }
