@@ -2,6 +2,9 @@
 
 namespace MessagesExchange.Infrastructure.Database.Migrator
 {
+    /// <summary>
+    /// Реализация сервиса миграций
+    /// </summary>
     public class MigrationsService : IMigrationsService
     {
         private readonly IEnumerable<Migration> _migrations;

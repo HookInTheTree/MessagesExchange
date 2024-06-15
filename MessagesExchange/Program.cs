@@ -19,10 +19,11 @@ builder.Services.AddScoped<IMessagesRepository, MessagesRepository>();
 
 builder.Services.AddHostedService<Migrator>();
 
-builder.Services.AddSignalR().AddHubOptions<MessagesRealTimeHub>(options =>
-{
-    options.EnableDetailedErrors = true;
-});
+builder.Services.AddSignalR()
+    .AddHubOptions<MessagesRealTimeHub>(options =>
+    {
+        options.EnableDetailedErrors = true;
+    });
 
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();

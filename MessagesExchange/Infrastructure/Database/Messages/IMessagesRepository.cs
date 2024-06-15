@@ -1,5 +1,8 @@
 ﻿namespace MessagesExchange.Infrastructure.Database.Messages
 {
+    /// <summary>
+    /// Контракт репозитория сообщений
+    /// </summary>
     public interface IMessagesRepository
     {
         Task<Message> CreateAsync(Message message);

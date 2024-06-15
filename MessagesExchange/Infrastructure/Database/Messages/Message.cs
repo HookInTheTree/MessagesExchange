@@ -2,6 +2,9 @@
 
 namespace MessagesExchange.Infrastructure.Database.Messages
 {
+    /// <summary>
+    /// Модель данных сообщения
+    /// </summary>
     public class Message
     {
         public Guid Id { get; set; }

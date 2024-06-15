@@ -1,5 +1,8 @@
 ﻿namespace MessagesExchange.Infrastructure.Database.Migrator
 {
+    /// <summary>
+    /// Задача, запускаемая на старте приложения с целью миграции базы данных
+    /// </summary>
     public class Migrator : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
