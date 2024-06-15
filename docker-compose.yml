@@ -1,8 +1,45 @@
 version: '3.4'
-
+networks:
+  message_exchange_network:
 services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "P@ssw0rd"
+      POSTGRES_DB: "messages_exchange"
+    networks:
+        - message_exchange_network
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  dbAdminer:
+    image: adminer
+    restart: always
+    networks:
+        - message_exchange_network
+    depends_on:
+        - db
+    ports:
+      - "8081:8080"
+
   messagesexchange:
     image: ${DOCKER_REGISTRY-}messagesexchange
     build:
       context: MessagesExchange
       dockerfile: Dockerfile
+    ports:
+    - "8080:80"
+    depends_on:
+        - db
+    networks:
+        - message_exchange_network
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=db;Port=5432;Database=messages_exchange;User Id=postgres;Password=P@ssw0rd;"
+      ConnectionStrings__MigrationsConnection: "Server=db;Port=5432;Database=postgres;User Id=postgres;Password=P@ssw0rd;"
+
+volumes:
+    postgres_data:

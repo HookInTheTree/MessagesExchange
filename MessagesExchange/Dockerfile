@@ -9,10 +9,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["MessagesExchange.csproj", "."]
-RUN dotnet restore "./././MessagesExchange.csproj"
+COPY ["MessagesExchange/MessagesExchange.csproj", "MessagesExchange/"]
+RUN dotnet restore "./MessagesExchange/./MessagesExchange.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/MessagesExchange"
 RUN dotnet build "./MessagesExchange.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
