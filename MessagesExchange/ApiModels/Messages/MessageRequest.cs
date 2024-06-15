@@ -4,11 +4,11 @@ namespace MessagesExchange.ApiModels.Messages
 {
     public class MessageRequest
     {
-        [Required]
+        [Required(ErrorMessage ="Message is required")]
         [MaxLength(128)]
         public string Message { get; set; }
         
-        [Required]
+        [Required(ErrorMessage ="Message is required")]
         public int Order { get; set; }
     }
 }

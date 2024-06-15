@@ -38,7 +38,12 @@ builder.Services.AddLogging(loggerBuilder =>
     loggerBuilder.AddSerilog(logger);
 });
 
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<RequestsExceptionsHandler>();
+
 var app = builder.Build();
+
+app.UseExceptionHandler();
 
 if (!app.Environment.IsDevelopment())
 {

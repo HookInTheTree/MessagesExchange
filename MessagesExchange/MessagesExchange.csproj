@@ -8,6 +8,8 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <BaseOutputPath>D:\Repositories\MessagesExchange\MessagesExchange\bin</BaseOutputPath>
+    <BaseIntermediateOutputPath>D:\Repositories\MessagesExchange\MessagesExchange\obj</BaseIntermediateOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
