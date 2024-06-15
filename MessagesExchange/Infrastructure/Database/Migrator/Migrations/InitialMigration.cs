@@ -26,7 +26,6 @@ namespace MessagesExchange.Infrastructure.Database.Migrator.Migrations
         /// <returns></returns>
         public async override Task Execute(CancellationToken cancellationToken)
         {
-            await CreateDatabase(cancellationToken);
             await CreateExtensions(cancellationToken);
             await CreateMigrationsTable(cancellationToken);
         }
@@ -42,20 +41,6 @@ namespace MessagesExchange.Infrastructure.Database.Migrator.Migrations
                 .FirstOrDefault(x => x.Contains("Database="))
                 .Split('=')
                 .LastOrDefault();
-        }
-
-        /// <summary>
-        /// Метод для создания базы данных
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        private async Task CreateDatabase(CancellationToken cancellationToken)
-        {
-            var databaseName = GetDatabaseName(_configuration.GetConnectionString("DefaultConnection"));
-            var sql = @$"CREATE DATABASE {databaseName}";
-
-            using var connection = _connectionsFactory.CreateConnection(_configuration.GetConnectionString("MigrationsConnection"));
-            await connection.ExecuteAsync(sql, cancellationToken);
         }
 
         /// <summary>

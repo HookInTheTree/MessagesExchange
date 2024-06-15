@@ -1,4 +1,6 @@
-﻿namespace MessagesExchange.Infrastructure.Database.Messages
+﻿using MessagesExchange.Models;
+
+namespace MessagesExchange.Infrastructure.Database.Messages
 {
     /// <summary>
     /// Контракт репозитория сообщений

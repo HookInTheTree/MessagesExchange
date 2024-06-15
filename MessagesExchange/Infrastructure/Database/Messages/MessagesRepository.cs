@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using MessagesExchange.Models;
 
 namespace MessagesExchange.Infrastructure.Database.Messages
 {

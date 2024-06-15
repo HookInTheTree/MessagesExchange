@@ -1,24 +1,28 @@
-﻿namespace MessagesExchange.Infrastructure.Logging;
+﻿using Microsoft.AspNetCore.Diagnostics;
 
-public class RequestsLoggingMiddleware
+namespace MessagesExchange.Infrastructure.Logging;
+
+public class ExceptionsHandler : IExceptionHandler
 {
-    private readonly RequestDelegate next;
-    private readonly ILogger<RequestsLoggingMiddleware> logger;
+    private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionsHandler> _logger;
 
-    public RequestsLoggingMiddleware(RequestDelegate _next, ILogger<RequestsLoggingMiddleware> _logger)
+    public ExceptionsHandler(RequestDelegate next, ILogger<ExceptionsHandler> logger)
     {
-        next = _next;
-        logger = _logger;
+        _next = next;
+        _logger = logger;
     }
 
-    public async Task InvokeAsync(HttpContext context)
+    public ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        await next(context);
-        await LogResponse(context);
+        _logger.LogError(exception, exception.Message);
+
+        if (httpContext.Request.Path.HasValue && !httpContext.Request.Path.Value.Contains("api"))
+        {
+            httpContext.Response.Redirect("/error");
+        }
+
+        return new ValueTask<bool>(true);
     }
 
-    private Task LogResponse(HttpContext context)
-    {
-        throw new NotImplementedException();
-    }
 }

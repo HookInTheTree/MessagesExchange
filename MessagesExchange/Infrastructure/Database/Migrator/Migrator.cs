@@ -25,6 +25,7 @@
             catch (Exception ex)
             {
                 _logger.Log(LogLevel.Critical, ex, ex.Message);
+                throw;
             }
         }
 

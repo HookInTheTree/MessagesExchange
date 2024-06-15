@@ -1,6 +1,7 @@
 ﻿using MessagesExchange.ApiModels.Messages;
 using MessagesExchange.Infrastructure.Database.Messages;
 using MessagesExchange.Infrastructure.SignalR;
+using MessagesExchange.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
