@@ -19,6 +19,13 @@ namespace MessagesExchange.Controllers
             _hubContext = hubContext;
         }
 
+        /// <summary>
+        /// Метод для получения сообщений. Принимает необязательные параметры, фильтрующие сообщения по дате создания.
+        /// </summary>
+        /// <param name="dateFrom">Дата, с которой необходимо фильтровать сообщения</param>
+        /// <param name="dateTo">Дата по которую необходимо фильтровать сообщения</param>
+        /// <response code="200">Список сообщений, удовлетворяющий параметрам запроса</response>
+        /// <response code="500">Непредвиденная ошибка сервера ошибка сервера</response>
         [HttpGet]
         public async Task<ActionResult<List<MessageResponse>>> Get(string dateFrom = "", string dateTo = "")
         {
@@ -55,6 +62,13 @@ namespace MessagesExchange.Controllers
                 }));
         }
 
+        /// <summary>
+        /// Метод для создания сообщения и оповещения подписчиков.
+        /// </summary>
+        /// <param name="request">Сообщение</param>
+        /// <response code="200">Сообщение успешно создано, все получатели оповещены</response>
+        /// <response code="400">Данные, отправленные для создания сообщения невалидны.</response>
+        /// <response code="500">Непредвиденная ошибка сервера ошибка сервера</response>
         [HttpPost]
         public async Task<ActionResult<MessageResponse>> Post(MessageRequest request)
         {

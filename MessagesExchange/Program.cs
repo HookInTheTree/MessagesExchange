@@ -4,7 +4,9 @@ using MessagesExchange.Infrastructure.Database.Migrator;
 using MessagesExchange.Infrastructure.Database.Migrator.Migrations;
 using MessagesExchange.Infrastructure.Logging;
 using MessagesExchange.Infrastructure.SignalR;
+using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,20 @@ builder.Services.AddSingleton<Migration, MessagesTableMigration>();
 builder.Services.AddScoped<IMessagesRepository, MessagesRepository>();
 
 builder.Services.AddHostedService<Migrator>();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Messages Exchange WEB API",
+        Description = "Web API documentation for Message Exchange app",
+    });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);
+});
 
 builder.Services.AddSignalR()
     .AddHubOptions<MessagesRealTimeHub>(options =>
@@ -49,6 +65,11 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
 }
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -62,6 +83,7 @@ app.MapControllerRoute(
     pattern: "{controller=Clients}/{action=Reader}/{id?}");
 
 app.MapHub<MessagesRealTimeHub>("/real-time-messages");
+
 
 
 app.Run();
